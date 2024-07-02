@@ -3,19 +3,20 @@ import { RiCloseCircleLine } from "react-icons/ri";
 import Itemcard from "./Itemcard";
 import { useSelector } from "react-redux";
 import { FaCartShopping } from "react-icons/fa6";
-import { GiH2O } from "react-icons/gi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const [activeCart, setActiveCart] = useState(true);
+  const [activeCart, setActiveCart] = useState(false);
   const cartItems = useSelector((state) => state.cart.cart);
-  const totalqty=
-  cartItems.reduce((acc, curr) => acc + curr.qty, 0);
-  const totalprice=
-  cartItems.reduce((acc, curr) => acc + curr.qty * curr.price, 0);
- const navigate=useNavigate()
+  const totalqty = cartItems.reduce((acc, curr) => acc + curr.qty, 0);
+  const totalprice = cartItems.reduce(
+    (acc, curr) => acc + curr.qty * curr.price,
+    0
+  );
+  const navigate = useNavigate();
+
   return (
-    <> 
+    <>
       <div
         className={`fixed right-0 top-0 w-full lg:w-[20vw] h-full bg-white ${
           activeCart ? "translate-x-0" : "translate-x-full"
@@ -49,15 +50,15 @@ const Cart = () => {
           </h2>
         )}
         <div className="absolute bottom-0">
+          <h3 className="font-semibold text-gray-800">Items: {totalqty}</h3>
           <h3 className="font-semibold text-gray-800">
-            Items: {totalqty}
-          </h3>
-          <h3 className="font-semibold text-gray-800">
-            Total Amount: $
-            {totalprice}
+            Total Amount: ${totalprice}
           </h3>
           <hr className="w-[90vw] lg:w-[18vw] my-2" />
-          <button onClick={()=>navigate("/success")} className="bg-green-500 font-bold px-3 py-2 text-white rounded-lg w-[90vw] lg:w-[18vw] mb-5">
+          <button
+            onClick={() => navigate("/success")}
+            className="bg-green-500 font-bold px-3 py-2 text-white rounded-lg w-[90vw] lg:w-[18vw] mb-5"
+          >
             Checkout
           </button>
         </div>
@@ -65,7 +66,8 @@ const Cart = () => {
       <FaCartShopping
         onClick={() => setActiveCart(!activeCart)}
         className={`rounded-full bg-white shadow-md text-5xl p-3 fixed bottom-4 right-4
-        ${totalqty>0 && "animate-bounce delay-500 transition-all "}`}/>
+        ${totalqty > 0 && "animate-bounce delay-500 transition-all "}`}
+      />
     </>
   );
 };
